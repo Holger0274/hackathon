@@ -335,6 +335,9 @@
     var heroActions = document.createElement('div');
     heroActions.className = 'output-card-actions';
 
+    var heroCopyBtn = buildCopyButton(adText);
+    heroActions.appendChild(heroCopyBtn);
+
     var postBtn = document.createElement('button');
     postBtn.className = 'cta-button cta-button--blue';
     postBtn.textContent = 'Post to LinkedIn →';
@@ -364,6 +367,10 @@
     var specContent = sections['JOB SPECIFICATION'] || '';
     if (specContent) {
       specCard.appendChild(markdownToHtml(specContent));
+      var specActions = document.createElement('div');
+      specActions.className = 'output-card-actions';
+      specActions.appendChild(buildCopyButton(specContent));
+      specCard.appendChild(specActions);
     } else {
       var specFallback = document.createElement('p');
       specFallback.textContent = '(Job Specification not found in output)';
@@ -383,6 +390,10 @@
     var scoreContent = sections['INTERVIEW SCORECARD'] || '';
     if (scoreContent) {
       scoreCard.appendChild(markdownToHtml(scoreContent));
+      var scoreActions = document.createElement('div');
+      scoreActions.className = 'output-card-actions';
+      scoreActions.appendChild(buildCopyButton(scoreContent));
+      scoreCard.appendChild(scoreActions);
     } else {
       var scoreFallback = document.createElement('p');
       scoreFallback.textContent = '(Interview Scorecard not found in output)';
@@ -390,6 +401,46 @@
     }
 
     outputRgn.appendChild(scoreCard);
+  }
+
+  // ── Copy button ───────────────────────────────────────────────────────────
+
+  function buildCopyButton(text) {
+    var btn = document.createElement('button');
+    btn.className = 'cta-button cta-button--ghost';
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', function () {
+      if (btn.classList.contains('is-success') || btn.classList.contains('is-error')) {
+        return;
+      }
+      if (!navigator.clipboard || !navigator.clipboard.writeText) {
+        showCopyFeedback(btn, false);
+        console.error('clipboard api unavailable');
+        return;
+      }
+      navigator.clipboard.writeText(text).then(
+        function () { showCopyFeedback(btn, true); },
+        function (err) {
+          showCopyFeedback(btn, false);
+          console.error('clipboard write failed:', err && err.message);
+        }
+      );
+    });
+    return btn;
+  }
+
+  function showCopyFeedback(btn, ok) {
+    if (btn._feedbackTimer) {
+      clearTimeout(btn._feedbackTimer);
+    }
+    btn.textContent = ok ? 'Copied ✓' : 'Copy failed';
+    btn.classList.add(ok ? 'is-success' : 'is-error');
+    btn._feedbackTimer = setTimeout(function () {
+      btn.classList.remove('is-success', 'is-error');
+      btn.textContent = 'Copy';
+      btn._feedbackTimer = null;
+    }, 1500);
   }
 
   // Helper: create an output card element
@@ -404,6 +455,13 @@
   function doReset() {
     var input     = document.getElementById('brief-input');
     var outputRgn = document.getElementById('output-region');
+    var copyBtns  = outputRgn.querySelectorAll('.cta-button--ghost');
+    for (var k = 0; k < copyBtns.length; k++) {
+      if (copyBtns[k]._feedbackTimer) {
+        clearTimeout(copyBtns[k]._feedbackTimer);
+        copyBtns[k]._feedbackTimer = null;
+      }
+    }
     outputRgn.innerHTML = '';
     input.value = '';
     setState('idle');
