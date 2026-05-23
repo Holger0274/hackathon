@@ -10,7 +10,7 @@ phases:
   - id: 1
     slug: "tracer-bullet-end-to-end"
     title: "Tracer bullet — full end-to-end Alex demo"
-    status: todo
+    status: done
     priority: P0
     mode: AFK
     depends_on: []

@@ -3,7 +3,7 @@
 > Branch: riff/phase-1-tracer-bullet-end-to-end
 > Status: pending verification (requires user to run `vercel dev` with their OPENROUTER_API_KEY)
 > Commits: b375481, 3e2934d, bbb2de4, 99daf08, d9b3e30
-> Merge commit: {{MERGE_COMMIT}}
+> Merge commit: 7936839
 
 ## What was built
 

@@ -2,18 +2,18 @@
 
 ## Current Position
 
-- **Command**: /riff:start
-- **Phase**: 1 (tracer-bullet-end-to-end)
-- **Stage / Step**: discovery complete
-- **Status**: Initialized
-- **Last action**: Bootstrap files written (Stage 5)
+- **Command**: /riff:next (Phase 1 merged)
+- **Phase**: Phase 1 done. Ready for Phase 2 or live testing.
+- **Stage / Step**: idle
+- **Status**: Phase 1 merged to main (merge SHA 7936839, 2026-05-23)
+- **Last action**: `git merge --no-ff riff/phase-1-tracer-bullet-end-to-end` + branch deleted
 
 ## Active Phase
 
-- **Id**: 1
-- **Slug**: 1-tracer-bullet-end-to-end
-- **Branch**: riff/phase-1-tracer-bullet-end-to-end
-- **Step**: 5 (pending)
+- **Id**: -
+- **Slug**: -
+- **Branch**: -
+- **Step**: -
 
 ## Active Decisions
 
@@ -28,31 +28,25 @@
 - Demo scope = Team Showcase + Alex (functional)
 - Deadline = today / tomorrow → tracer-bullet mode
 - Stack = vanilla HTML/CSS/JS + Vercel Functions
+- Phase 1 pulled Phase 2 polish (loading rotation, Cmd+Shift+P) forward — Phase 2 scope effectively shrinks to "copy buttons" only.
 
 ## Open Buckets
 
-- Nothing in flight. Ready for `/riff:next` to start Phase 1.
+- Local runtime verification still pending — needs `vercel dev` + `OPENROUTER_API_KEY` to smoke-test the function end-to-end.
+- Production deploy (`vercel --prod`) pending.
 
 ## Files to bootstrap
 
-- PROJECT.md
-- ROADMAP.yaml
-- CONTEXT.md
-- taste.md (+ taste/frontend.md, taste/backend.md, taste/security.md)
-- .planning/design/pages.md
-- .planning/design/architecture.md
-- INCIDENTS.md
-- Docs/peopleos-alex-demo.html (existing — Builder Brief, the source of truth for visual + prompt details)
-- Docs/brand-guidelines.md (existing — colour + type system)
+- (none — Phase 1 complete, all files committed)
 
 ## Resume Command
 
-Run `/riff:next` to start Phase 1 (tracer-bullet-end-to-end).
+Run `/riff:next` to start Phase 2 (polish-loading-and-shortcuts), OR run `vercel dev` to test Phase 1 locally before continuing.
 
 ## Session Notes
 
-- Existing files in `Docs/` (peopleos-alex-demo.html, brand-guidelines.md) are the authoritative source for visual design + Alex system prompt.
-- `CLAUDE.md` declares "Plain HTML/CSS/JS (kein Framework, keine Build-Pipeline)" — Vercel functions are an addition, not a contradiction. Update CLAUDE.md if the framework note misleads future sessions.
+- Phase 1 executor pulled forward two Phase 2 features that were trivially cheap (loading rotation, Cmd+Shift+P shortcut). Phase 2 description in ROADMAP still says all three; consider trimming to "copy buttons" only before starting Phase 2.
+- Model slug was initially written as `claude-sonnet-4-6` (hyphenated) by the executor; fixed to `claude-sonnet-4.6` (dotted) per OpenRouter's slug convention. Verified against https://openrouter.ai/anthropic/claude-sonnet-4.6.
 
 ## Blockers
 
@@ -60,4 +54,4 @@ Run `/riff:next` to start Phase 1 (tracer-bullet-end-to-end).
 
 ## Next Action
 
-Run `/riff:next` to begin Phase 1 implementation.
+Recommended: run `vercel dev` locally (after setting `OPENROUTER_API_KEY` in `.env.local`) and verify the demo end-to-end with a real brief before scheduling Phase 2 or production deploy.
