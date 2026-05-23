@@ -2,11 +2,11 @@
 
 ## Current Position
 
-- **Command**: /riff:next (Phase 1 merged)
-- **Phase**: Phase 1 done. Ready for Phase 2 or live testing.
+- **Command**: /riff:next (Phase 2 merged)
+- **Phase**: Phase 2 done. Ready for Phase 3 (Team Showcase) or Phase 4.
 - **Stage / Step**: idle
-- **Status**: Phase 1 merged to main (merge SHA 7936839, 2026-05-23)
-- **Last action**: `git merge --no-ff riff/phase-1-tracer-bullet-end-to-end` + branch deleted
+- **Status**: Phase 2 merged to main (merge SHA a0739b2, 2026-05-23)
+- **Last action**: `git merge --no-ff riff/phase-2-polish-loading-and-shortcuts`
 
 ## Active Phase
 

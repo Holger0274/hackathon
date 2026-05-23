@@ -3,7 +3,7 @@
 > Branch: riff/phase-2-polish-loading-and-shortcuts
 > Status: code complete, pending live verification
 > Scope (revised): Copy-Buttons only — Loading-Rotation + Cmd+Shift+P already shipped in Phase 1.
-> Merge commit: {{MERGE_COMMIT}}
+> Merge commit: a0739b2
 
 ## What was built
 
