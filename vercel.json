@@ -2,10 +2,5 @@
   "outputDirectory": ".",
   "rewrites": [
     { "source": "/alex", "destination": "/alex.html" }
-  ],
-  "functions": {
-    "api/alex.js": {
-      "runtime": "nodejs20.x"
-    }
-  }
+  ]
 }
