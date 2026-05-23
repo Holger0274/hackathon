@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "phase": "3-team-showcase-page",
+  "generated_at": "2026-05-23T00:00:00Z",
+  "verdict": "MATCH",
+  "planned_tasks": [
+    {
+      "id": "Task 3.1 — Rewrite index.html with the 8-card grid",
+      "source_line": 37
+    },
+    {
+      "id": "Task 3.2 — Verify CSS coverage, patch only if visibly broken",
+      "source_line": 76
+    }
+  ],
+  "completed_tasks": [
+    {
+      "id": "Task 3.1 — Rewrite index.html with the 8-card grid",
+      "matched_planned": "Task 3.1 — Rewrite index.html with the 8-card grid"
+    },
+    {
+      "id": "Task 3.2 — Verify CSS coverage, patch only if visibly broken",
+      "matched_planned": "Task 3.2 — Verify CSS coverage, patch only if visibly broken"
+    }
+  ],
+  "unmatched_tasks": [],
+  "planned_smokes": [],
+  "smoke_results": [],
+  "unmatched_smokes": [],
+  "failed_smokes": [],
+  "smoke_too_thin": false,
+  "malformed_reason": null
+}
