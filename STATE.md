@@ -10,10 +10,10 @@
 
 ## Active Phase
 
-- **Id**: -
-- **Slug**: -
-- **Branch**: -
-- **Step**: -
+- **Id**: 1
+- **Slug**: 1-tracer-bullet-end-to-end
+- **Branch**: riff/phase-1-tracer-bullet-end-to-end
+- **Step**: 5 (pending)
 
 ## Active Decisions
 

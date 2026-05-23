@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Chen — PeopleOS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+
+    <a href="/" class="back-link">← Back to team</a>
+
+    <!-- Agent identity card -->
+    <div class="agent-card">
+      <div class="avatar">AX</div>
+      <div class="agent-details">
+        <h3>Alex Chen</h3>
+        <p>Talent Acquisition Manager</p>
+        <div class="agent-tag">Hiring &amp; Recruitment · Agent 1 of 8</div>
+      </div>
+      <div class="agent-status">
+        <span class="online-dot"></span>Online
+      </div>
+    </div>
+
+    <!-- Brief input section -->
+    <section>
+      <h2>Brief Alex</h2>
+      <div class="input-section">
+        <textarea
+          id="brief-input"
+          class="textarea"
+          rows="6"
+          placeholder="Brief Alex on the role you need to fill…"
+          maxlength="2000"
+          autofocus
+        ></textarea>
+      </div>
+      <button id="submit-btn" class="cta-button" disabled>Get to work, Alex →</button>
+    </section>
+
+    <!-- Loading panel (hidden initially) -->
+    <div id="loading-panel" hidden>
+      <div class="loading-panel">
+        <div class="loading-title">▍ ALEX IS ON IT…</div>
+        <div id="loading-copy">Reviewing the brief.</div>
+        <div class="loading-dots" id="loading-dots">●●●○</div>
+      </div>
+    </div>
+
+    <!-- Output region (hidden initially) -->
+    <div
+      id="output-region"
+      class="output-region"
+      aria-live="polite"
+      hidden
+    ></div>
+
+    <!-- "Brief Alex again" button (hidden initially) -->
+    <div id="reset-section" hidden style="text-align: center; margin-bottom: 32px;">
+      <button id="reset-btn" class="cta-button cta-button--secondary">Brief Alex again</button>
+    </div>
+
+    <!-- Warning panel (hidden initially) -->
+    <div id="warning-panel" hidden>
+      <div class="warning">
+        <p>⚠ Alex is having a moment.</p>
+        <p>Network hiccup. Hit the button again — it usually takes one retry on a busy network.</p>
+        <button id="retry-btn" class="cta-button cta-button--secondary">Try again, Alex →</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>PeopleOS · Berlin 2026</span>
+      <span>Alex Chen · Talent Acquisition</span>
+    </div>
+
+  </div>
+
+  <script src="alex.js"></script>
+</body>
+</html>

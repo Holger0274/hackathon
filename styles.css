@@ -1,0 +1,603 @@
+/* styles.css — PeopleOS shared stylesheet
+   Covers both index.html (Team Showcase) and alex.html (Alex Interface).
+   All colours from CSS custom properties only — no inline hex in components.
+   Google Fonts loaded via <link> in HTML, not @import here.
+*/
+
+/* ─── CSS Custom Properties ──────────────────────────────────────────────── */
+
+:root {
+  /* Backgrounds */
+  --black:    #0a0a0a;
+  --card:     #1a1a1a;
+  --card2:    #141414;
+
+  /* Borders */
+  --border:   #2a2a2a;
+
+  /* Text */
+  --white:    #f0ede8;
+  --muted:    #666666;
+
+  /* Accents */
+  --gold:     #f5a623;
+  --gold-dim: #a06b10;
+  --blue:     #60a5fa;
+  --green:    #4ade80;
+  --red:      #f87171;
+
+  /* Contextual / component colours */
+  --navy-bg:       #0d1219;   /* role badge bg, prompt box bg */
+  --navy-deep:     #0d1a2e;   /* avatar bg, agent-tag bg */
+  --navy-border:   #1a2a3a;   /* interactive/highlighted borders */
+  --code-bg:       #080d14;   /* prompt / code box bg */
+  --code-text:     #a0c4ff;   /* prompt box body text */
+  --warn-bg:       #1a1000;   /* warning background */
+  --warn-border:   #3a2a00;   /* warning border */
+  --warn-text:     #ffd080;   /* warning text */
+  --crit-bg:       #1a0d0d;   /* deadline / critical alert bg */
+  --crit-border:   #3a1a1a;   /* deadline border */
+  --north-text:    #050d1a;   /* north-star box text */
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Page container ─────────────────────────────────────────────────────── */
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+h1 em {
+  color: var(--gold);
+  font-style: normal;
+}
+
+h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* Output card headings (h3 inside output cards) */
+.output-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+strong {
+  color: var(--gold);
+}
+
+/* ─── Section spacing ────────────────────────────────────────────────────── */
+
+section {
+  margin-bottom: 48px;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+
+.header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 36px;
+  margin-bottom: 44px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+/* ─── Role badge ─────────────────────────────────────────────────────────── */
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--navy-bg);
+  border: 1px solid var(--navy-border);
+  padding: 8px 16px;
+  border-radius: 2px;
+  margin-bottom: 28px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+
+/* ─── Agent card ─────────────────────────────────────────────────────────── */
+
+.agent-card {
+  background: var(--card);
+  border: 1px solid var(--navy-border);
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--navy-deep);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.agent-details h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.agent-details p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.agent-tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--navy-deep);
+  color: var(--blue);
+  border: 1px solid var(--navy-border);
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+/* Online status dot */
+.online-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-right: 6px;
+}
+
+.agent-status {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--green);
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Input section ──────────────────────────────────────────────────────── */
+
+.input-section {
+  margin-bottom: 32px;
+}
+
+.textarea {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 16px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--white);
+  line-height: 1.6;
+  resize: vertical;
+  display: block;
+  transition: border-color 0.15s;
+}
+
+.textarea::placeholder {
+  color: var(--muted);
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  text-decoration: none;
+}
+
+.cta-button:hover {
+  opacity: 0.88;
+}
+
+.cta-button:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.cta-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Secondary / muted button variant */
+.cta-button--secondary {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.cta-button--secondary:hover {
+  border-color: var(--white);
+  color: var(--white);
+  opacity: 1;
+}
+
+/* Blue button variant (e.g. Post to LinkedIn) */
+.cta-button--blue {
+  background: var(--blue);
+  color: var(--black);
+}
+
+.cta-button--blue:focus {
+  outline-color: var(--blue);
+}
+
+/* ─── Loading panel ──────────────────────────────────────────────────────── */
+
+.loading-panel {
+  background: var(--card);
+  border: 1px solid var(--navy-border);
+  border-radius: 4px;
+  padding: 22px 26px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--code-text);
+  margin-bottom: 24px;
+}
+
+.loading-panel .loading-title {
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.loading-dots {
+  display: inline-block;
+  color: var(--blue);
+}
+
+/* ─── Output region + cards ──────────────────────────────────────────────── */
+
+.output-region {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+/* aria-live wrapper for screen readers */
+.output-region[aria-live] {
+  /* attribute set in HTML; no additional styles needed */
+}
+
+.output-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px 20px;
+  overflow: hidden;
+}
+
+/* Hero / featured card — LinkedIn ad */
+.output-card--hero {
+  border-color: var(--gold-dim);
+  grid-column: 1 / -1;
+}
+
+/* Output tag label */
+.output-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--blue);
+}
+
+.output-tag--gold {
+  color: var(--gold);
+}
+
+/* Pre-formatted text (LinkedIn ad) */
+.output-card pre {
+  white-space: pre-wrap;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--white);
+  margin: 0 0 16px 0;
+}
+
+/* Markdown-rendered content inside output cards */
+.output-card p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.output-card ul,
+.output-card ol {
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+
+.output-card li {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+
+.output-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.output-card th,
+.output-card td {
+  text-align: left;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--white);
+}
+
+.output-card th {
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Card action row */
+.output-card-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* ─── Warning panel ──────────────────────────────────────────────────────── */
+
+.warning {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: 4px;
+  padding: 18px 20px;
+  font-size: 13px;
+  color: var(--warn-text);
+  margin-bottom: 24px;
+}
+
+.warning p {
+  margin-bottom: 12px;
+}
+
+.warning p:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Back link ──────────────────────────────────────────────────────────── */
+
+.back-link {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 32px;
+  transition: color 0.15s;
+}
+
+.back-link:hover {
+  color: var(--white);
+}
+
+/* ─── Copy tag (small inline status) ────────────────────────────────────── */
+
+.copy-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--green);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.copy-tag.is-visible {
+  opacity: 1;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ─── Team grid (Phase 3 — placeholder hook) ─────────────────────────────── */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* Individual team member card */
+.team-card {
+  background: var(--card);
+  border: 1px solid var(--navy-border);
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.15s;
+}
+
+.team-card--active {
+  cursor: pointer;
+}
+
+.team-card--active:hover {
+  border-color: var(--blue);
+}
+
+.team-card--inactive {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.team-card .avatar {
+  width: 48px;
+  height: 48px;
+  font-size: 16px;
+}
+
+.team-card-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.team-card-role {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Status pills on team cards */
+.status-pill {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+.status-pill--active {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  color: var(--gold);
+}
+
+.status-pill--coming {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+/* ─── Utility: hidden ────────────────────────────────────────────────────── */
+
+[hidden] {
+  display: none !important;
+}
