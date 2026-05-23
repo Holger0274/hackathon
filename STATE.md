@@ -2,51 +2,39 @@
 
 ## Current Position
 
-- **Command**: /riff:next (Phase 4 merged)
-- **Phase**: Phase 4 done. Starting Phase 5 (Robustness + Streaming).
+- **Command**: /riff:next (Phase 5 merged)
+- **Phase**: ALL 5 PHASES DONE. Demo is complete.
 - **Stage / Step**: idle
-- **Status**: Phase 4 merged to main (merge SHA 198cb65, 2026-05-23)
-- **Last action**: `git merge --no-ff riff/phase-4-demo-day-hardening`
+- **Status**: Phase 5 merged to main (merge SHA 58052f4, 2026-05-23)
+- **Last action**: `git merge --no-ff riff/phase-5-fallback-rendering-and-streaming`
 
 ## Active Phase
 
-- **Id**: 5
-- **Slug**: 5-fallback-rendering-and-streaming
-- **Branch**: riff/phase-5-fallback-rendering-and-streaming
-- **Step**: 5 (pending)
+- **Id**: -
+- **Slug**: -
+- **Branch**: -
+- **Step**: -
 
 ## Active Decisions
 
 - Scope = production
-- Stack source = discussed (no starter clone)
-- Architecture adversarial = skipped (trivial 1-function architecture)
-- Roadmap adversarial = skipped (5 phases, easy to re-sequence manually)
-- LLM provider = OpenRouter
-- Model = anthropic/claude-sonnet-4.6
-- Hosting = Vercel
-- API key storage = Vercel env vars (OPENROUTER_API_KEY)
-- Demo scope = Team Showcase + Alex (functional)
-- Deadline = today / tomorrow → tracer-bullet mode
 - Stack = vanilla HTML/CSS/JS + Vercel Functions
-- Phase 1 pulled Phase 2 polish forward; Phase 3 CSS scaffold pre-authored in Phase 1.
-- Phase 4: LinkedIn truncation was already in alex.js from Phase 1 — only the visibility gap was closed.
+- LLM provider = OpenRouter, model = anthropic/claude-sonnet-4.6
+- Hosting = Vercel, API key in Vercel env vars
 
 ## Open Buckets
 
-- `avatars/` directory + `generate_avatars.py` (with hardcoded API key) sitting untracked in working tree — out of scope for all phases so far, user chose to ignore.
-
-## Resume Command
-
-Run `/riff:next` to start Phase 5 (fallback-rendering-and-streaming).
+- `generate_avatars.py` (with hardcoded API key) sits untracked in working tree — not committed, not gitignored.
 
 ## Session Notes
 
-- Executor silent-exit pattern seen in Phase 4: executor returned cleanly but did not write SUMMARY.md. Backfilled inline from commit data.
+- Phase 5 executor added avatar work (out of scope) — user approved including it.
+- Executor silent-exit pattern observed in Phases 4 + 5: SUMMARY.md not written despite clean exit. Backfilled inline both times.
 
 ## Blockers
 
-- None.
+- None. All 5 phases shipped.
 
 ## Next Action
 
-Phase 5: Robustness (fallback rendering for malformed output) + optional streaming via SSE.
+Demo is ready. Run through `Docs/PRE-DEMO.md` before going on stage.

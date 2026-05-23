@@ -37,4 +37,4 @@ SSE streaming for the Alex demo (first visible characters <1s after submit) plus
 
 > Status: code complete
 > Branch: `riff/phase-5-fallback-rendering-and-streaming`
-> Merge commit: {{MERGE_COMMIT}}
+> Merge commit: 58052f4

@@ -105,7 +105,7 @@ phases:
   - id: 5
     slug: "fallback-rendering-and-streaming"
     title: "Robustness: fallback rendering + optional streaming"
-    status: todo
+    status: done
     priority: P2
     mode: AFK
     depends_on: [1, 2]
