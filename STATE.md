@@ -10,10 +10,10 @@
 
 ## Active Phase
 
-- **Id**: -
-- **Slug**: -
-- **Branch**: -
-- **Step**: -
+- **Id**: 3
+- **Slug**: 3-team-showcase-page
+- **Branch**: riff/phase-3-team-showcase-page
+- **Step**: 5 (pending)
 
 ## Active Decisions
 
