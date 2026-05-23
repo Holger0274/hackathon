@@ -1,0 +1,3 @@
+# Hackathon
+
+AImation Hackathon-Projekt.
