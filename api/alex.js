@@ -35,7 +35,7 @@ export default async function handler(req, res) {
         'X-Title': 'PeopleOS · Alex',
       },
       body: JSON.stringify({
-        model: 'anthropic/claude-sonnet-4-6',
+        model: 'anthropic/claude-sonnet-4.6',
         messages: [
           { role: 'system', content: ALEX_SYSTEM_PROMPT },
           { role: 'user', content: brief },
