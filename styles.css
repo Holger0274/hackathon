@@ -359,6 +359,18 @@ section {
   border-color: var(--red);
 }
 
+.truncation-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--warn-text);
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  padding: 6px 10px;
+  border-radius: 2px;
+  align-self: center;
+}
+
 /* ─── Loading panel ──────────────────────────────────────────────────────── */
 
 .loading-panel {

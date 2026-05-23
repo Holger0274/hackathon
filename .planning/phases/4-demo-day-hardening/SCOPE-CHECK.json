@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "phase": "4-demo-day-hardening",
+  "generated_at": "2026-05-23T00:00:00Z",
+  "verdict": "MATCH",
+  "planned_tasks": [
+    {
+      "id": "Task 4.1 — Docs/RUN-LOCAL.md",
+      "source_line": 21
+    },
+    {
+      "id": "Task 4.2 — Visible truncation pill",
+      "source_line": 77
+    },
+    {
+      "id": "Task 4.3 — Docs/PRE-DEMO.md",
+      "source_line": 134
+    }
+  ],
+  "completed_tasks": [
+    {
+      "id": "Task 4.1 — Docs/RUN-LOCAL.md",
+      "matched_planned": "Task 4.1 — Docs/RUN-LOCAL.md"
+    },
+    {
+      "id": "Task 4.2 — Visible truncation pill",
+      "matched_planned": "Task 4.2 — Visible truncation pill"
+    },
+    {
+      "id": "Task 4.3 — Docs/PRE-DEMO.md",
+      "matched_planned": "Task 4.3 — Docs/PRE-DEMO.md"
+    }
+  ],
+  "unmatched_tasks": [],
+  "planned_smokes": [
+    {
+      "command": "cat Docs/RUN-LOCAL.md | wc -l",
+      "source_line": 189
+    },
+    {
+      "command": "cat Docs/PRE-DEMO.md | wc -l",
+      "source_line": 190
+    },
+    {
+      "command": "grep -c truncation-pill alex.js",
+      "source_line": 192
+    },
+    {
+      "command": "grep -c truncation-pill styles.css",
+      "source_line": 192
+    }
+  ],
+  "smoke_results": [
+    {
+      "command": "cat Docs/RUN-LOCAL.md | wc -l",
+      "status": "pass"
+    },
+    {
+      "command": "cat Docs/PRE-DEMO.md | wc -l",
+      "status": "pass"
+    },
+    {
+      "command": "grep -c truncation-pill alex.js",
+      "status": "pass"
+    },
+    {
+      "command": "grep -c truncation-pill styles.css",
+      "status": "pass"
+    }
+  ],
+  "unmatched_smokes": [],
+  "failed_smokes": [],
+  "smoke_too_thin": false,
+  "malformed_reason": null
+}

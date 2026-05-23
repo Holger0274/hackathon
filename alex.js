@@ -343,13 +343,18 @@
     postBtn.textContent = 'Post to LinkedIn →';
     postBtn.addEventListener('click', function () {
       var text = adText;
+      var wasTruncated = false;
       if (text.length > 2000) {
         text = text.slice(0, 1950) + '…';
+        wasTruncated = true;
         console.warn('LinkedIn ad truncated to 1950 chars (original: ' + adText.length + ')');
       }
       var url = 'https://www.linkedin.com/feed/?shareActive=true&text=' +
                 encodeURIComponent(text);
       window.open(url, '_blank', 'noopener,noreferrer');
+      if (wasTruncated) {
+        showTruncationPill(heroActions);
+      }
     });
     heroActions.appendChild(postBtn);
     heroCard.appendChild(heroActions);
@@ -441,6 +446,17 @@
       btn.textContent = 'Copy';
       btn._feedbackTimer = null;
     }, 1500);
+  }
+
+  function showTruncationPill(container) {
+    // Idempotent — only one pill at a time
+    var existing = container.querySelector('.truncation-pill');
+    if (existing) existing.remove();
+    var pill = document.createElement('span');
+    pill.className = 'truncation-pill';
+    pill.textContent = 'Trimmed to fit LinkedIn (2k limit)';
+    container.appendChild(pill);
+    setTimeout(function () { pill.remove(); }, 4000);
   }
 
   // Helper: create an output card element

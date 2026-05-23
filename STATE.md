@@ -10,10 +10,10 @@
 
 ## Active Phase
 
-- **Id**: -
-- **Slug**: -
-- **Branch**: -
-- **Step**: -
+- **Id**: 4
+- **Slug**: 4-demo-day-hardening
+- **Branch**: riff/phase-4-demo-day-hardening
+- **Step**: 5 (pending)
 
 ## Active Decisions
 
