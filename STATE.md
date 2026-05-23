@@ -2,18 +2,18 @@
 
 ## Current Position
 
-- **Command**: /riff:next (Phase 3 merged)
-- **Phase**: Phase 3 done. Ready for Phase 4 (Demo-Day Hardening).
+- **Command**: /riff:next (Phase 4 merged)
+- **Phase**: Phase 4 done. Starting Phase 5 (Robustness + Streaming).
 - **Stage / Step**: idle
-- **Status**: Phase 3 merged to main (merge SHA a18d689, 2026-05-23)
-- **Last action**: `git merge --no-ff riff/phase-3-team-showcase-page`
+- **Status**: Phase 4 merged to main (merge SHA 198cb65, 2026-05-23)
+- **Last action**: `git merge --no-ff riff/phase-4-demo-day-hardening`
 
 ## Active Phase
 
-- **Id**: 4
-- **Slug**: 4-demo-day-hardening
-- **Branch**: riff/phase-4-demo-day-hardening
-- **Step**: 5 (pending)
+- **Id**: -
+- **Slug**: -
+- **Branch**: -
+- **Step**: -
 
 ## Active Decisions
 
@@ -28,25 +28,20 @@
 - Demo scope = Team Showcase + Alex (functional)
 - Deadline = today / tomorrow → tracer-bullet mode
 - Stack = vanilla HTML/CSS/JS + Vercel Functions
-- Phase 1 pulled Phase 2 polish (loading rotation, Cmd+Shift+P) forward — Phase 2 scope effectively shrinks to "copy buttons" only.
+- Phase 1 pulled Phase 2 polish forward; Phase 3 CSS scaffold pre-authored in Phase 1.
+- Phase 4: LinkedIn truncation was already in alex.js from Phase 1 — only the visibility gap was closed.
 
 ## Open Buckets
 
-- Local runtime verification still pending — needs `vercel dev` + `OPENROUTER_API_KEY` to smoke-test the function end-to-end.
-
-## Files to bootstrap
-
-- (none — Phase 3 complete, all files committed)
+- `avatars/` directory + `generate_avatars.py` (with hardcoded API key) sitting untracked in working tree — out of scope for all phases so far, user chose to ignore.
 
 ## Resume Command
 
-Run `/riff:next` to start Phase 4 (demo-day-hardening).
+Run `/riff:next` to start Phase 5 (fallback-rendering-and-streaming).
 
 ## Session Notes
 
-- Phase 1 executor pulled forward two Phase 2 features that were trivially cheap (loading rotation, Cmd+Shift+P shortcut).
-- Model slug was initially written as `claude-sonnet-4-6` (hyphenated); fixed to `claude-sonnet-4.6` (dotted) per OpenRouter's slug convention.
-- Phase 3: CSS scaffold was pre-authored in Phase 1, so implementation was 86 lines of HTML only.
+- Executor silent-exit pattern seen in Phase 4: executor returned cleanly but did not write SUMMARY.md. Backfilled inline from commit data.
 
 ## Blockers
 
@@ -54,4 +49,4 @@ Run `/riff:next` to start Phase 4 (demo-day-hardening).
 
 ## Next Action
 
-Run `/riff:next` to start Phase 4 (Demo-Day Hardening — local fallback + LinkedIn URL validation + pre-demo checklist).
+Phase 5: Robustness (fallback rendering for malformed output) + optional streaming via SSE.

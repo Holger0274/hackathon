@@ -82,7 +82,7 @@ phases:
   - id: 4
     slug: "demo-day-hardening"
     title: "Demo-day hardening — local fallback + checklist + URL validation"
-    status: todo
+    status: done
     priority: P1
     mode: AFK
     depends_on: [1]

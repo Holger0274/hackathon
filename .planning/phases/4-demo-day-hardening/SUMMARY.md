@@ -42,4 +42,4 @@ Pill render verification deferred to live Vercel preview (requires generating a 
 
 > Status: code complete
 > Branch: `riff/phase-4-demo-day-hardening`
-> Merge commit: {{MERGE_COMMIT}}
+> Merge commit: 198cb65
