@@ -1,0 +1,1 @@
+../../../.riff/hooks/typecheck-gate.sh

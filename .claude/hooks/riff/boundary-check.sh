@@ -1,0 +1,1 @@
+../../../.riff/hooks/boundary-check.sh

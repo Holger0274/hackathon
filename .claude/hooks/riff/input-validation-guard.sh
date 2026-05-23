@@ -1,0 +1,1 @@
+../../../.riff/hooks/input-validation-guard.sh

@@ -1,0 +1,1 @@
+../../../.riff/hooks/dangerous-command-guard.auto-merge.sh

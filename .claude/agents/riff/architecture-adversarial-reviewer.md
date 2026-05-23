@@ -1,0 +1,1 @@
+../../../.riff/agents/architecture-adversarial-reviewer.md

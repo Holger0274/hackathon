@@ -1,0 +1,76 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/voice-rules-inject.sh"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/voice-rules-inject.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/destructive-guard.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/boundary-check.sh \"$TOOL_INPUT\""
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/typecheck-gate.sh \"$TOOL_INPUT\""
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/lint-gate.sh \"$TOOL_INPUT\""
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/test-gate.sh \"$TOOL_INPUT\""
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/route-auth-guard.sh \"$TOOL_INPUT\""
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/idor-detector.sh \"$TOOL_INPUT\""
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/input-validation-guard.sh \"$TOOL_INPUT\""
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/riff/todo-orphan-guard.sh \"$TOOL_INPUT\""
+          }
+        ]
+      }
+    ]
+  }
+}

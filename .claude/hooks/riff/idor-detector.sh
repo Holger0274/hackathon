@@ -1,0 +1,1 @@
+../../../.riff/hooks/idor-detector.sh
