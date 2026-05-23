@@ -1,1 +1,6 @@
-{ "scope": "production" }
+{
+  "scope": "production",
+  "arch_adversarial": false,
+  "roadmap_adversarial": false,
+  "stack_source": "discussed"
+}

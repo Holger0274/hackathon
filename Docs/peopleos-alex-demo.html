@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PeopleOS — Alex Demo Build Spec</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a; --card: #1a1a1a; --card2: #141414; --border: #2a2a2a;
+    --gold: #f5a623; --gold-dim: #a06b10; --white: #f0ede8; --muted: #666;
+    --green: #4ade80; --red: #f87171; --blue: #60a5fa;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; }
+  .page { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
+
+  .role-badge { display: inline-flex; align-items: center; gap: 10px; background: #0d1219; border: 1px solid #1a2a3a; padding: 8px 16px; border-radius: 2px; margin-bottom: 28px; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.15em; color: var(--blue); text-transform: uppercase; }
+  .header { border-bottom: 1px solid var(--border); padding-bottom: 36px; margin-bottom: 44px; }
+  h1 { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+  h1 em { color: var(--gold); font-style: normal; }
+  .subtitle { font-size: 16px; color: var(--muted); margin-top: 10px; }
+  h2 { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; display: flex; align-items: center; gap: 12px; }
+  h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  section { margin-bottom: 48px; }
+
+  .north-star { background: var(--blue); color: #050d1a; padding: 24px 28px; border-radius: 4px; font-size: 17px; font-weight: 500; line-height: 1.5; }
+
+  /* AGENT IDENTITY */
+  .agent-card {
+    background: var(--card); border: 1px solid #1a2a3a;
+    border-radius: 4px; padding: 24px;
+    display: flex; gap: 20px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .avatar { width: 60px; height: 60px; border-radius: 50%; background: #0d1a2e; color: #60a5fa; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; flex-shrink: 0; }
+  .agent-details h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; }
+  .agent-details p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  .agent-details .tag { display: inline-block; margin-top: 8px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: #0d1a2e; color: #60a5fa; border: 1px solid #1a2a3a; padding: 3px 10px; border-radius: 2px; }
+
+  /* SPEC BLOCKS */
+  .spec { background: var(--card); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+  .spec-header { background: #1a1a1a; padding: 12px 20px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .spec-body { padding: 20px 22px; font-size: 14px; line-height: 1.8; }
+  .spec-body code { font-family: 'DM Mono', monospace; background: #111; padding: 2px 6px; border-radius: 2px; font-size: 12px; color: var(--blue); }
+  .spec-body strong { color: var(--gold); }
+
+  /* OUTPUT TABS */
+  .output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .out { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; }
+  .out.featured { border-color: var(--gold-dim); grid-column: 1 / -1; }
+  .out-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .out-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .out-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .out-win { margin-top: 10px; font-size: 11px; font-family: 'DM Mono', monospace; }
+
+  /* PROMPT */
+  .prompt-box { background: #080d14; border: 1px solid #1a2a3a; border-radius: 4px; padding: 22px 26px; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 1.9; color: #a0c4ff; }
+  .prompt-box .comment { color: #3a5a3a; }
+
+  /* LINKEDIN */
+  .li-spec { background: #0d1219; border: 1px solid #1a2a3a; border-radius: 4px; overflow: hidden; }
+  .li-header { background: #0a77b5; padding: 14px 20px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+  .li-body { padding: 20px 22px; }
+  .li-field { display: grid; grid-template-columns: 140px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1a2a3a; font-size: 13px; }
+  .li-field:last-child { border-bottom: none; }
+  .li-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); padding-top: 1px; }
+  .li-value { color: var(--white); }
+  .li-value code { font-family: 'DM Mono', monospace; font-size: 11px; background: #111; padding: 2px 6px; border-radius: 2px; color: var(--blue); }
+
+  /* DEMO STEPS */
+  .demo-step { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 4px; padding: 16px 20px; margin-bottom: 4px; display: grid; grid-template-columns: 28px 1fr; gap: 14px; }
+  .ds-n { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--blue); font-weight: 500; }
+  .ds-t { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .ds-d { font-size: 12px; color: var(--muted); }
+  .ds-d .say { color: var(--gold); font-style: italic; }
+
+  .warning { background: #1a1000; border: 1px solid #3a2a00; border-radius: 4px; padding: 14px 18px; font-size: 13px; color: #ffd080; }
+  .deadline { background: #1a0d0d; border: 1px solid #3a1a1a; padding: 12px 18px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--red); margin-bottom: 4px; }
+
+  .footer { border-top: 1px solid var(--border); padding-top: 24px; margin-top: 60px; display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="role-badge">⚙️ Builder · Updated Demo Spec</div>
+    <h1>Build <em>Alex.</em></h1>
+    <p class="subtitle">The live demo is now: Alex Chen, Talent Acquisition Manager, writes a JD and posts a job to LinkedIn on stage in 60 seconds.</p>
+  </div>
+
+  <section>
+    <h2>Why This Demo Wins</h2>
+    <div class="north-star">
+      Every HR manager in that room has spent 4 hours writing a job description this month. You show them Alex doing it in 4 seconds, formatting it as a LinkedIn advert, and posting it live. They will feel that. That's not a demo — that's a product they want to buy tomorrow.
+    </div>
+  </section>
+
+  <section>
+    <h2>Who You're Building</h2>
+    <div class="agent-card">
+      <div class="avatar">AX</div>
+      <div class="agent-details">
+        <h3>Alex Chen</h3>
+        <p>Talent Acquisition Manager · PeopleOS AI HR Department</p>
+        <div class="tag">Hiring & Recruitment · Agent 1 of 8</div>
+      </div>
+    </div>
+    <p style="font-size:14px; color: var(--muted); line-height:1.7;">Alex is the first agent the Pitcher will demo on stage. The entire presentation concept has shifted — instead of an intake tool, you're now showing a named AI HR team member doing a specific job. Alex gets called in, given a brief, and produces four outputs instantly. The interaction feels like delegating to a real person.</p>
+  </section>
+
+  <section>
+    <h2>The Input — What the Pitcher Types to Alex</h2>
+    <div class="spec">
+      <div class="spec-header">Demo Input (pre-typed, ready to paste)</div>
+      <div class="spec-body">
+        <strong>User prompt to Alex:</strong><br><br>
+        "Alex, I need to hire a Senior Software Engineer. They need 5+ years experience in React and Node.js. London-based, hybrid 2 days in office. Reports to the CTO. Salary £85,000–£100,000. Company is a 28-person Series B SaaS. Start date ASAP. We're building a B2B analytics platform. Culture is fast-paced, high autonomy, engineering-led."<br><br>
+        <strong>That's it.</strong> One paragraph. Everything else Alex handles automatically.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Four Outputs Alex Produces</h2>
+    <div class="output-grid">
+      <div class="out featured">
+        <div class="out-tag" style="color: var(--gold);">Output 01 — The Hero Output</div>
+        <div class="out-title">LinkedIn Job Advert — Ready to Post</div>
+        <div class="out-desc">
+          Formatted exactly for LinkedIn. Hook headline. 2-sentence company intro. Role summary. 4-5 bullet responsibilities. 4-5 bullet requirements. Salary range. How to apply. Character count under 2,000 (LinkedIn optimal). Emoji sparingly where appropriate for engagement. Sounds human, not corporate.
+        </div>
+        <div class="out-win" style="color: var(--gold);">⚡ This is what gets posted live on stage</div>
+      </div>
+      <div class="out">
+        <div class="out-tag" style="color: var(--blue);">Output 02</div>
+        <div class="out-title">Full Job Specification</div>
+        <div class="out-desc">Internal document. Role purpose, reporting line, key responsibilities (8–10), essential/desirable skills, package, location, working pattern. Professional format. Copy-paste ready.</div>
+        <div class="out-win" style="color: var(--green);">✓ Ships without editing</div>
+      </div>
+      <div class="out">
+        <div class="out-tag" style="color: var(--blue);">Output 03</div>
+        <div class="out-title">Interview Scorecard</div>
+        <div class="out-desc">5 competency areas with weighted scores. 2 questions per competency. Rating scale 1–5 with anchor descriptions. Ready for the hiring panel to use on day one.</div>
+        <div class="out-win" style="color: var(--green);">✓ Judges see the system thinking ahead</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The LinkedIn Post Button — The Magic Moment</h2>
+    <div class="li-spec">
+      <div class="li-header">
+        🔗 LinkedIn Job Post — How to Build the "Post" Moment
+      </div>
+      <div class="li-body">
+        <div class="li-field">
+          <div class="li-label">Option A (Best)</div>
+          <div class="li-value">LinkedIn Share URL — pre-populate the post text. When Pitcher clicks "Post to LinkedIn", opens: <code>https://www.linkedin.com/sharing/share-offsite/?url=...</code> with the advert in the text field. Requires no API. Works in any browser. Pitcher clicks "Post" in LinkedIn. It goes live. On stage. In real time.</div>
+        </div>
+        <div class="li-field">
+          <div class="li-label">Option B (Fallback)</div>
+          <div class="li-value">Copy to clipboard button. Pitcher opens LinkedIn in new tab, pastes, shows audience. Still live. Still real. Slightly less smooth.</div>
+        </div>
+        <div class="li-field">
+          <div class="li-label">What to say</div>
+          <div class="li-value" style="color: var(--gold); font-style: italic;">"Alex just wrote that job ad. I'm going to post it to LinkedIn right now. From brief to live — 45 seconds."</div>
+        </div>
+        <div class="li-field">
+          <div class="li-label">LinkedIn Share URL format</div>
+          <div class="li-value"><code>https://www.linkedin.com/feed/?shareActive=true&text=[ENCODED_TEXT]</code> — use <code>encodeURIComponent()</code> on the advert text</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The System Prompt — Alex's Personality + Instructions</h2>
+    <div class="prompt-box">
+<span class="comment">// SYSTEM PROMPT — copy exactly into your API call</span><br><br>
+You are Alex Chen, Talent Acquisition Manager at PeopleOS. You are a world-class recruiter with deep knowledge of UK employment law, job market benchmarks, and what makes candidates apply.<br><br>
+When given a hiring brief, always respond with exactly three sections using these headers:<br><br>
+## LINKEDIN JOB ADVERT<br>
+[Write a compelling LinkedIn-formatted job post. Hook headline. 2-sentence company intro. Role overview. 5 bullet responsibilities. 5 bullet requirements. Salary. How to apply. Under 2,000 characters. Human and engaging — not corporate boilerplate.]<br><br>
+## JOB SPECIFICATION<br>
+[Full internal spec. Role purpose. Reports to. Location/working pattern. Key responsibilities as numbered list. Essential skills. Desirable skills. Package and benefits. Professional format.]<br><br>
+## INTERVIEW SCORECARD<br>
+[5 competency areas relevant to this role. 2 questions per competency. Rating scale 1-5 with brief anchor descriptions. Table format.]<br><br>
+Write in UK English. Use £ for salary. Be specific — not generic. Sound like a senior recruiter who knows this market, not an AI generating filler content.
+    </div>
+  </section>
+
+  <section>
+    <h2>UI — What to Build</h2>
+    <div class="spec">
+      <div class="spec-header">Alex Interface Spec</div>
+      <div class="spec-body">
+        <strong>Header:</strong> "Alex Chen · Talent Acquisition Manager" with the blue avatar and green "Online" dot — matches the team showcase page.<br><br>
+        <strong>Input area:</strong> Large textarea with placeholder — "Brief Alex on the role you need to fill…" — and a "Get to work, Alex →" button.<br><br>
+        <strong>Loading state:</strong> Show "Alex is on it…" with a subtle animation. The suspense is part of the demo.<br><br>
+        <strong>Output:</strong> Three sections rendered cleanly. LinkedIn advert in a highlighted box (this is the hero). JD and Scorecard below.<br><br>
+        <strong>The button:</strong> Below the LinkedIn advert — a blue "Post to LinkedIn" button. On click: <code>window.open(linkedInShareUrl, '_blank')</code>.<br><br>
+        <strong>Copy button:</strong> On every output section — "Copy" button. Judges will want to copy the JD.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Live Demo Script for Pitcher (Updated)</h2>
+    <div class="demo-step">
+      <div class="ds-n">1</div>
+      <div><div class="ds-t">Show the team slide (all 8 agents)</div><div class="ds-d"><span class="say">"This is your PeopleOS HR team. Eight AI managers — all specialisms covered, all available right now. Let me introduce you to one of them."</span></div></div>
+    </div>
+    <div class="demo-step">
+      <div class="ds-n">2</div>
+      <div><div class="ds-t">Switch to Alex's interface — full screen</div><div class="ds-d"><span class="say">"This is Alex Chen. Alex is your Talent Acquisition Manager. James needs to hire a Senior Engineer. He's going to brief Alex right now."</span></div></div>
+    </div>
+    <div class="demo-step">
+      <div class="ds-n">3</div>
+      <div><div class="ds-t">Paste the pre-typed brief into Alex's input</div><div class="ds-d"><span class="say">"That's it. That's the whole brief. One paragraph. Let's see what Alex does with it."</span> Hit submit.</div></div>
+    </div>
+    <div class="demo-step">
+      <div class="ds-n">4</div>
+      <div><div class="ds-t">Output appears — narrate what you're seeing</div><div class="ds-d"><span class="say">"LinkedIn job advert — formatted, ready to post. Full job specification. Interview scorecard for the hiring panel."</span></div></div>
+    </div>
+    <div class="demo-step">
+      <div class="ds-n">5</div>
+      <div><div class="ds-t">Click "Post to LinkedIn" — THE MOMENT</div><div class="ds-d"><span class="say">"I'm going to post this to LinkedIn right now. Live. On stage."</span> Click. LinkedIn opens. Post goes live. <span class="say">"From brief to live job post — 45 seconds. That used to be James's Thursday afternoon."</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pre-Demo Checklist</h2>
+    <div class="deadline">Test the LinkedIn share URL works BEFORE you go on stage. Open it 3 times. Confirm the text populates correctly.</div>
+    <div class="deadline">Have the pre-typed brief ready to paste — do not type it live. Seconds matter.</div>
+    <div class="deadline">Know your LinkedIn login. The post requires you to be logged in.</div>
+    <div class="deadline">If the API is slow: narrate. "Alex is reviewing the brief…" Don't stare at the spinner in silence.</div>
+    <div class="deadline">FREEZE THE BUILD at 15:30. Test once more at 15:45. Then hands off laptop until 16:00.</div>
+  </section>
+
+  <div class="footer">
+    <span>PeopleOS · Berlin 2026 · Builder Brief · Alex Demo</span>
+    <span>⚙️ UPDATED SPEC v2</span>
+  </div>
+
+</div>
+</body>
+</html>

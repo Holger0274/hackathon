@@ -1,0 +1,125 @@
+name: "PeopleOS — Alex Demo"
+description: "Hackathon demo: Alex Chen writes a job advert and posts it to LinkedIn live on stage. Berlin 2026."
+created: "2026-05-23"
+
+# Hackathon scope — bias toward shipping a working tracer-bullet ASAP.
+# Phase 1 is the only must-have; Phases 2-5 are polish/safety nets.
+budget_quality: max
+
+phases:
+  - id: 1
+    slug: "tracer-bullet-end-to-end"
+    title: "Tracer bullet — full end-to-end Alex demo"
+    status: todo
+    priority: P0
+    mode: AFK
+    depends_on: []
+    description: |
+      Ship a working vertical slice: Team Showcase page → click Alex → Alex page
+      with textarea → submit brief → Vercel function calls OpenRouter → render
+      3-section output (LinkedIn ad / Job Spec / Scorecard) → "Post to LinkedIn"
+      button opens share dialog. Deployed to Vercel, OPENROUTER_API_KEY in env.
+      Brand-consistent (dark theme, gold/blue, DM Sans/Syne/DM Mono).
+
+      Acceptance: a real brief produces a real 3-section output, the LinkedIn
+      ad opens a pre-populated LinkedIn share dialog when clicked, all rendered
+      on production Vercel URL. End-to-end ≤ 8 seconds for the API call.
+
+      Includes minimal error fallback so the demo never shows a 500 page.
+    planner_model: opus
+    risk_focus: "OpenRouter call shape, 3-section parsing edge cases, LinkedIn URL encoding"
+
+  - id: 2
+    slug: "polish-loading-and-shortcuts"
+    title: "Polish: loading state with personality + pre-fill shortcut + copy buttons"
+    status: todo
+    priority: P1
+    mode: AFK
+    depends_on: [1]
+    description: |
+      Three polish features that make the live demo bulletproof and snappy:
+      (a) Loading state with rotating copy ("Reviewing the brief…", "Drafting
+          the advert…", "Building the scorecard…") + animated dots so the
+          4-7s wait feels intentional, not broken.
+      (b) Cmd/Ctrl+Shift+P keyboard shortcut pastes the rehearsed demo brief
+          into the textarea. Pitcher's safety net — no live typing.
+      (c) "Copy" buttons on each of the 3 output cards (Clipboard API),
+          with "Copied ✓" feedback for 1.5s.
+
+      Acceptance: rehearsing the demo feels natural; loading never looks dead.
+    planner_model: codex
+
+  - id: 3
+    slug: "team-showcase-page"
+    title: "Team Showcase landing page — 8 agent cards"
+    status: todo
+    priority: P1
+    mode: AFK
+    depends_on: [1]
+    description: |
+      Standalone Team Showcase page at `/`. 8 agent cards in 3x3-ish grid
+      (3 cols, the 8th in its own row of 2). Only Alex's card is interactive
+      (clickable → /alex, hover lifts border to blue). The other 7 show
+      "Coming Soon" pill, muted, cursor: not-allowed.
+
+      Agents (names + roles — invented for the demo, no real product mapping):
+        AX · Alex Chen      · Talent Acquisition   · [ACTIVE]
+        JS · Jordan Smith   · Onboarding           · [COMING]
+        RT · Rae Taylor     · Performance          · [COMING]
+        PR · Priya Rao      · Compensation & Bens  · [COMING]
+        MK · Morgan Kade    · Learning & Devt      · [COMING]
+        CL · Casey Lin      · Culture & Engmt      · [COMING]
+        SN · Sam Nakamura   · HR Operations        · [COMING]
+        DL · Dana Lee       · Compliance & Legal   · [COMING]
+
+      Brand: dark, gold "ACTIVE" pill on Alex, muted "COMING" pill on the
+      others. Green online dot only on Alex's avatar.
+
+      Acceptance: page loads in <1s, clicking Alex card navigates to /alex,
+      other cards do nothing but show "Coming soon" tooltip.
+    planner_model: codex
+
+  - id: 4
+    slug: "demo-day-hardening"
+    title: "Demo-day hardening — local fallback + checklist + URL validation"
+    status: todo
+    priority: P1
+    mode: AFK
+    depends_on: [1]
+    description: |
+      Safety net for the live demo:
+      (a) Local-fallback mode: a docs page `Docs/RUN-LOCAL.md` with the
+          5 commands to run the entire demo from the laptop without Vercel
+          (`vercel dev` + `OPENROUTER_API_KEY=…`). Tested once, bookmarked.
+      (b) LinkedIn URL validation: client checks the parsed LinkedIn ad
+          section is <2,000 chars BEFORE building the share URL. If it
+          exceeds, truncate to 1,950 chars + "…" suffix and log a warning.
+      (c) Pre-demo checklist as `Docs/PRE-DEMO.md`: tickable items
+          (Vercel URL bookmarked, OPENROUTER_API_KEY confirmed in env,
+          LinkedIn logged in, share URL tested 3 times, browser cache cleared).
+
+      Acceptance: pitcher walks through the checklist and the local-fallback
+      command runs the demo with zero changes.
+    planner_model: codex
+
+  - id: 5
+    slug: "fallback-rendering-and-streaming"
+    title: "Robustness: fallback rendering + optional streaming"
+    status: todo
+    priority: P2
+    mode: AFK
+    depends_on: [1, 2]
+    description: |
+      (a) If model output doesn't contain the expected ## headers, render
+          the raw output in a single card with a "Show raw output" disclosure
+          banner. Never let bad parsing dead-end the demo.
+      (b) [Stretch] Stream the OpenRouter response token-by-token via SSE
+          and surface the LinkedIn ad chars as they arrive. Only attempt if
+          Phases 1-4 are done with time to spare; complexity is non-trivial
+          and a non-streamed demo is already great.
+
+      Acceptance: malformed model output → demo still renders something
+      sensible. Streaming (if implemented) → first chars visible <1s after
+      submit.
+    planner_model: opus
+    risk_focus: "SSE buffering, malformed Markdown edge cases"
