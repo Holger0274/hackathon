@@ -10,10 +10,10 @@
 
 ## Active Phase
 
-- **Id**: -
-- **Slug**: -
-- **Branch**: -
-- **Step**: -
+- **Id**: 5
+- **Slug**: 5-fallback-rendering-and-streaming
+- **Branch**: riff/phase-5-fallback-rendering-and-streaming
+- **Step**: 5 (pending)
 
 ## Active Decisions
 
