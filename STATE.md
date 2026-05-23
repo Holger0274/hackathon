@@ -2,18 +2,18 @@
 
 ## Current Position
 
-- **Command**: /riff:next (Phase 2 merged)
-- **Phase**: Phase 2 done. Ready for Phase 3 (Team Showcase) or Phase 4.
+- **Command**: /riff:next (Phase 3 merged)
+- **Phase**: Phase 3 done. Ready for Phase 4 (Demo-Day Hardening).
 - **Stage / Step**: idle
-- **Status**: Phase 2 merged to main (merge SHA a0739b2, 2026-05-23)
-- **Last action**: `git merge --no-ff riff/phase-2-polish-loading-and-shortcuts`
+- **Status**: Phase 3 merged to main (merge SHA a18d689, 2026-05-23)
+- **Last action**: `git merge --no-ff riff/phase-3-team-showcase-page`
 
 ## Active Phase
 
-- **Id**: 3
-- **Slug**: 3-team-showcase-page
-- **Branch**: riff/phase-3-team-showcase-page
-- **Step**: 5 (pending)
+- **Id**: -
+- **Slug**: -
+- **Branch**: -
+- **Step**: -
 
 ## Active Decisions
 
@@ -33,20 +33,20 @@
 ## Open Buckets
 
 - Local runtime verification still pending — needs `vercel dev` + `OPENROUTER_API_KEY` to smoke-test the function end-to-end.
-- Production deploy (`vercel --prod`) pending.
 
 ## Files to bootstrap
 
-- (none — Phase 1 complete, all files committed)
+- (none — Phase 3 complete, all files committed)
 
 ## Resume Command
 
-Run `/riff:next` to start Phase 2 (polish-loading-and-shortcuts), OR run `vercel dev` to test Phase 1 locally before continuing.
+Run `/riff:next` to start Phase 4 (demo-day-hardening).
 
 ## Session Notes
 
-- Phase 1 executor pulled forward two Phase 2 features that were trivially cheap (loading rotation, Cmd+Shift+P shortcut). Phase 2 description in ROADMAP still says all three; consider trimming to "copy buttons" only before starting Phase 2.
-- Model slug was initially written as `claude-sonnet-4-6` (hyphenated) by the executor; fixed to `claude-sonnet-4.6` (dotted) per OpenRouter's slug convention. Verified against https://openrouter.ai/anthropic/claude-sonnet-4.6.
+- Phase 1 executor pulled forward two Phase 2 features that were trivially cheap (loading rotation, Cmd+Shift+P shortcut).
+- Model slug was initially written as `claude-sonnet-4-6` (hyphenated); fixed to `claude-sonnet-4.6` (dotted) per OpenRouter's slug convention.
+- Phase 3: CSS scaffold was pre-authored in Phase 1, so implementation was 86 lines of HTML only.
 
 ## Blockers
 
@@ -54,4 +54,4 @@ Run `/riff:next` to start Phase 2 (polish-loading-and-shortcuts), OR run `vercel
 
 ## Next Action
 
-Recommended: run `vercel dev` locally (after setting `OPENROUTER_API_KEY` in `.env.local`) and verify the demo end-to-end with a real brief before scheduling Phase 2 or production deploy.
+Run `/riff:next` to start Phase 4 (Demo-Day Hardening — local fallback + LinkedIn URL validation + pre-demo checklist).

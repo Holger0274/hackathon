@@ -34,4 +34,4 @@ Expected results once deployed:
 
 > Status: code complete
 > Branch: `riff/phase-3-team-showcase-page`
-> Merge commit: {{MERGE_COMMIT}}
+> Merge commit: a18d689
