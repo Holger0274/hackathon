@@ -101,44 +101,47 @@
 
     if (brief.length < 20) return;
 
-    var outputRgn = document.getElementById('output-region');
-    outputRgn.innerHTML = ''; // clear previous results safely
-
     setState('submitting');
     startLoadingRotation();
 
-    var controller = new AbortController();
-    var timeoutId = setTimeout(function () { controller.abort(); }, 30000);
-
-    fetch('/api/alex', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ brief: brief }),
-      signal: controller.signal,
-    })
-      .then(function (res) {
-        clearTimeout(timeoutId);
+    fetchOutputStreaming(brief)
+      .then(function () {
         stopLoadingRotation();
-        if (!res.ok) {
-          throw new Error('non-ok response: ' + res.status);
-        }
-        return res.json();
-      })
-      .then(function (data) {
-        if (!data || !data.output) {
-          throw new Error('empty output in response');
-        }
-        renderOutput(data.output);
         setState('result');
-        // Smooth-scroll to first output card
         var firstCard = document.querySelector('#output-region .output-card');
         if (firstCard) firstCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
       })
-      .catch(function (err) {
-        clearTimeout(timeoutId);
+      .catch(function () {
+        // Streaming failed — fall back to existing non-streaming POST
         stopLoadingRotation();
-        console.error('alex submit failed:', err, { briefLength: brief.length });
-        setState('error');
+        startLoadingRotation();
+        var controller = new AbortController();
+        var timeoutId = setTimeout(function () { controller.abort(); }, 30000);
+        fetch('/api/alex', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ brief: brief }),
+          signal: controller.signal,
+        })
+          .then(function (res) {
+            clearTimeout(timeoutId);
+            stopLoadingRotation();
+            if (!res.ok) throw new Error('non-ok: ' + res.status);
+            return res.json();
+          })
+          .then(function (data) {
+            if (!data || !data.output) throw new Error('empty output');
+            renderOutput(data.output);
+            setState('result');
+            var firstCard = document.querySelector('#output-region .output-card');
+            if (firstCard) firstCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          })
+          .catch(function (err) {
+            clearTimeout(timeoutId);
+            stopLoadingRotation();
+            console.error('alex fallback failed:', err);
+            setState('error');
+          });
       });
   }
 
@@ -483,6 +486,81 @@
     setState('idle');
     input.focus();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Utility: hide loading + warning panels ────────────────────────────────
+
+  function hidePanels() {
+    document.getElementById('loading-panel').hidden = true;
+    document.getElementById('warning-panel').hidden = true;
+  }
+
+  // ── Streaming fetch ───────────────────────────────────────────────────────
+
+  function fetchOutputStreaming(brief) {
+    // Accumulates full text; renders hero card live, rest after [DONE]
+    var outputRgn = document.getElementById('output-region');
+    var accumulated = '';
+
+    // Show hero card immediately (empty, will fill in as tokens arrive)
+    var heroCard = buildCard(true);
+    var heroTag = document.createElement('div');
+    heroTag.className = 'output-tag output-tag--gold';
+    heroTag.textContent = 'OUTPUT 01 — LINKEDIN JOB ADVERT';
+    heroCard.appendChild(heroTag);
+    var heroPre = document.createElement('pre');
+    heroPre.textContent = '';
+    heroCard.appendChild(heroPre);
+    outputRgn.innerHTML = '';
+    outputRgn.hidden = false;
+    outputRgn.appendChild(heroCard);
+    hidePanels();
+
+    return fetch('/api/alex-stream', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ brief: brief }),
+    }).then(function (res) {
+      if (!res.ok || !res.body) throw new Error('stream unavailable');
+
+      var reader = res.body.getReader();
+      var decoder = new TextDecoder();
+      var buffer = '';
+
+      function pump() {
+        return reader.read().then(function (result) {
+          var done = result.done;
+          var value = result.value;
+
+          if (done) {
+            renderOutput(accumulated);
+            return;
+          }
+
+          buffer += decoder.decode(value, { stream: true });
+          var lines = buffer.split('\n');
+          buffer = lines.pop(); // keep incomplete last line
+
+          for (var i = 0; i < lines.length; i++) {
+            var line = lines[i];
+            if (!line.startsWith('data: ')) continue;
+            var raw = line.slice(6);
+            if (raw === '[DONE]') { renderOutput(accumulated); return; }
+            try {
+              var token = JSON.parse(raw);
+              accumulated += token;
+              // Live-update the hero <pre> with the ad section so far
+              var adMatch = accumulated.match(/## LINKEDIN JOB ADVERT\s*([\s\S]*?)(?=## [A-Z]|$)/);
+              if (adMatch) heroPre.textContent = adMatch[1].trim();
+            } catch (e) { /* skip malformed chunk */ }
+          }
+
+          return pump();
+        });
+      }
+
+      return pump();
+    });
   }
 
   // ── Pitcher shortcut: Cmd/Ctrl+Shift+P ───────────────────────────────────
